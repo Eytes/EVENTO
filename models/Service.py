@@ -4,9 +4,10 @@ from pydantic import BaseModel
 class Service(BaseModel):
     id: int
     title: str
-    data: str
-    time: str
+    description: str
     owner_id: int
+    type: str
+    lock: bool
 
     def get(self):
         '''получить услугу из БД'''
