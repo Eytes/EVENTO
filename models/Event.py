@@ -6,8 +6,9 @@ class Event(BaseModel):
     title: str
     # description: str
     agent_id: int
+    # date: str
     # type: str
-    # lock: bool
+    # status: str
 
 
 class EventService:
