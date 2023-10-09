@@ -8,16 +8,8 @@ from .Common import (
 )
 
 
-class AgentTitle(BaseModel):
-    title: str
-
-
 # class AgentTitleUpdating(BaseModel):
 #     new_title: str
-
-
-# class AgentRate(BaseModel):
-#     rate: float
 
 
 class AgentBase(BaseModel):
