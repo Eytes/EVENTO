@@ -34,41 +34,41 @@ def __delete_document(collection: Collection, query: dict) -> None:
     collection.delete_one(query)
 
 
-def create_agent():
+def create_agent(agent: dict) -> str:
     """ Создание агента. Агент - представитьель и организатор события """
-    pass
+    return __create_document(agents, agent)
 
 
-def create_event():
+def create_event(event: dict) -> str:
     """ Создание события """
-    pass
+    return __create_document(events, event)
 
 
-def create_appointment():
+def create_appointment(appointment: dict) -> str:
     """ Запись клиента на событие  """
-    pass
+    return __create_document(appointments, appointment)
 
 
-def create_client():
+def create_client(client: dict) -> str:
     """ Создание клиента """
-    pass
+    return __create_document(clients, client)
 
 
-def get_agent():
+def get_agent_by_title(title: str):
     """ Получеение данных о агенте """
-    pass
+    return __get_document(agents, {"title": title})
 
 
-def get_event():
+def get_event_by_title(title: str):
     """ Получеение данных о событии """
-    pass
+    return __get_document(events, {"title": title})
 
 
-def get_appointment():
+def get_client_appointment(client_id: int):
     """ Получеение данных о записи клиента """
-    pass
+    return __get_document(appointments, {'client_id': client_id})
 
 
-def get_client():
+def get_client(id_: int):
     """ Получеение данных о клиенте """
-    pass
+    return __get_document(clients, {'_id': id_})
