@@ -3,13 +3,7 @@ from pydantic import (
     Field,
 )
 
-from .Common import (
-    Message,
-)
-
-
-# class AgentTitleUpdating(BaseModel):
-#     new_title: str
+from dto.Common import Message
 
 
 class AgentBase(BaseModel):
