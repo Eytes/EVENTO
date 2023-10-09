@@ -6,10 +6,6 @@ from pydantic import (
 from dto.Common import Message
 
 
-# class AgentTitleUpdating(BaseModel):
-#     new_title: str
-
-
 class AgentBase(BaseModel):
     title: str
     # rate: float
