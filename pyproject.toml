@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 pymongo = "^4.5.0"
+fastapi = {extras = ["all"], version = "^0.103.2"}
 
 
 [build-system]
