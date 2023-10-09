@@ -27,7 +27,7 @@ class ErrorUserNotFound(BaseModel):
     )
 
 
-class RegisterErrorPhoneNumbreExist(BaseModel):
+class RegisterErrorPhoneNumberExist(BaseModel):
     title_exist: bool
     message: Message = Message(
         ru='Клиент с таким номером уже зарегистрирован',
