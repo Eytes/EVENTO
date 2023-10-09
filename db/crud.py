@@ -29,7 +29,7 @@ def __update_document(collection: Collection, query_elements: dict, new_values: 
     collection.update_one(query_elements, {'$set': new_values})
 
 
-def __delete_document(collection, query):
+def __delete_document(collection: Collection, query: dict) -> None:
     """ Function to delete a single document from a collection. """
     collection.delete_one(query)
 
