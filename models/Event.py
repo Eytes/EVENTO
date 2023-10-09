@@ -5,7 +5,7 @@ class Event(BaseModel):
     id: int
     title: str
     # description: str
-    owner_id: int
+    agent_id: int
     # type: str
     # lock: bool
 

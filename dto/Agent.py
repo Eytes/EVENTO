@@ -1,0 +1,44 @@
+from pydantic import (
+    BaseModel,
+    Field,
+)
+
+from .Common import (
+    Message,
+)
+
+
+class AgentTitle(BaseModel):
+    title: str
+
+
+# class AgentTitleUpdating(BaseModel):
+#     new_title: str
+
+
+# class AgentRate(BaseModel):
+#     rate: float
+
+
+class AgentBase(BaseModel):
+    title: str
+    # rate: float
+
+
+class Agent(AgentBase):
+    id: int = Field(alias='_id')
+
+
+class ErrorAgentNotFound(BaseModel):
+    message: Message = Message(
+        ru='Агент не найден',
+        en="Agent doesn't found"
+    )
+
+
+class RegisterErrorTitleExist(BaseModel):
+    title_exist: bool
+    message: Message = Message(
+        ru='Агент с таким названием уже зарегистрирован',
+        en='Agent with same title already registered'
+    )
