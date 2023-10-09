@@ -5,11 +5,10 @@ from pydantic import (
     Field,
 )
 
-from models import Event
+from models.Event import Event
 
 
 class AgentEvents(BaseModel):
-    # agent_id: int
     event_list: List[Event]
 
 

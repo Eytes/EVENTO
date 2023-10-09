@@ -3,9 +3,7 @@ from pydantic import (
     Field,
 )
 
-from .Common import (
-    Message,
-)
+from dto.Common import Message
 
 
 # class AgentTitleUpdating(BaseModel):
