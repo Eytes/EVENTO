@@ -5,7 +5,7 @@ class Event(BaseModel):
     id: int
     title: str
     # description: str
-    owner_id: int
+    agent_id: int
     # type: str
     # lock: bool
 
@@ -28,5 +28,5 @@ class EventService:
         pass
 
     def update(self):
-        '''изменить параметры события / обновсить данные'''
+        '''изменить параметры / обновить данные события'''
         pass
