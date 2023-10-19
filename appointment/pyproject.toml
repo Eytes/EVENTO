@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "appointment"
+version = "0.1.0"
+description = ""
+authors = ["Eytes <yura.shamanov2000@bk.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pymongo = "^4.5.0"
+fastapi = {extras = ["all"], version = "^0.103.2"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

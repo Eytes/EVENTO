@@ -3,7 +3,7 @@ from pydantic import (
     Field,
 )
 
-from dto.Common import Message
+from appointment.dto.Common import Message
 
 
 class AgentBase(BaseModel):

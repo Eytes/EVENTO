@@ -4,7 +4,7 @@ from pydantic import (
     BaseModel,
 )
 
-from dto.Event import (
+from appointment.dto.Event import (
     Event,
     EventBase,
 )

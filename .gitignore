@@ -1,6 +1,6 @@
-.idea/
-.vscode/
-__pycache__/
-*env
-.git/
-
+env
+venv
+.git
+.idea
+.vscode
+__pycache__
