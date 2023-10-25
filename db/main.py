@@ -21,3 +21,8 @@ app = FastAPI()
 async def appointments(event_title: str):
     return
 
+
+@app.post("/db/appointments/")
+async def create_appointments(appointment: Appointment):
+    return AppointmentCRUD.create(appointment)
+
