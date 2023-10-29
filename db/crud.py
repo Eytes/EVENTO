@@ -1,4 +1,5 @@
 from abc import ABC
+from typing import Any
 
 from pymongo.collection import Collection
 from pydantic import UUID4
@@ -23,31 +24,45 @@ class _MongoCRUD(ABC):
     абстрактный класс для работы с mongodb
     """
 
+    __Document = dict[str, Any]
+
     @staticmethod
-    def create_document(collection: Collection, document: dict) -> str:
+    def create_document(collection: Collection, document: __Document) -> str:
         """ Function to insert a document into a collection and
         return the document's id. """
         return str(collection.insert_one(document).inserted_id)
 
     @staticmethod
-    def get_document(collection: Collection, elements: dict, multiple: bool = False) -> list:
-        """ Function to retrieve single or multiple documents from a provided
+    def get_document(collection: Collection, elements: dict) -> __Document:
+        """ Function to retrieve single document from a provided
         Collection using a dictionary containing a document's elements. """
-        if multiple:
-            results = collection.find(elements)
-        else:
-            results = collection.find_one(elements)
+        results = collection.find_one(elements)
+        return results
+
+    @staticmethod
+    def get_documents(collection: Collection, elements: dict) -> list[__Document]:
+        """ Function to retrieve multiple documents from a provided
+        Collection using a dictionary containing a document's elements. """
+        results = collection.find(elements)
         return [r for r in results]
 
     @staticmethod
-    def update_document(collection: Collection, query_elements: dict, new_values: dict) -> None:
+    def update_document(collection: Collection, query_elements: __Document, new_values: __Document) -> None:
         """ Function to update a single document in a collection. """
         collection.update_one(query_elements, {'$set': new_values})
 
     @staticmethod
-    def delete_document(collection: Collection, query: dict) -> None:
+    def delete_document(collection: Collection, query: __Document) -> None:
         """ Function to delete a single document from a collection. """
         collection.delete_one(query)
+
+    @staticmethod
+    def document_exist(collection: Collection, element_id: UUID4) -> bool:
+        document = _MongoCRUD.get_document(
+            collection,
+            {"_id": element_id},
+        )
+        return True if document else False
 
 
 class AgentCRUD:
@@ -66,7 +81,7 @@ class AgentCRUD:
     def get_by_title(title: str) -> list:
         """ Получеение данных о агенте """
 
-        return _MongoCRUD.get_document(
+        return _MongoCRUD.get_documents(
             AgentCRUD.__collection,
             {"title": title}
         )
@@ -88,10 +103,9 @@ class EventCRUD:
     def get_by_title(title: str) -> list[Event]:
         """ Получеение данных о событии """
 
-        data = _MongoCRUD.get_document(
+        data = _MongoCRUD.get_documents(
             EventCRUD.__collection,
             {"title": title},
-            multiple=True
         )
         return [Event(**item) for item in data]
 
@@ -102,6 +116,7 @@ class AppointmentCRUD:
     @staticmethod
     def make_an_appointment(appointment: Appointment, client_id: UUID4) -> None:
         """ Запись клиента на событие  """
+
         _MongoCRUD.update_document(
             AppointmentCRUD.__collection,
             {"_id": appointment.id},
@@ -109,31 +124,52 @@ class AppointmentCRUD:
         )
 
     @staticmethod
+    def get_by_id(appointment_id: UUID4) -> Appointment | None:
+        raw_appointment = _MongoCRUD.get_document(
+            AppointmentCRUD.__collection,
+            {"_id": appointment_id},
+        )
+        if raw_appointment:
+            return Appointment(**raw_appointment)
+
+    @staticmethod
     def create(appointment: Appointment) -> str:
         """ Создание записи на событие """
+
         return _MongoCRUD.create_document(
             AppointmentCRUD.__collection,
-            appointment.model_dump(by_alias=True)
+            appointment.model_dump(by_alias=True),
+        )
+
+    @staticmethod
+    def delete(event_id: UUID4, appointment_id: UUID4):
+        """ Удаление записи на событие """
+
+        _MongoCRUD.delete_document(
+            AppointmentCRUD.__collection,
+            {
+                "_id": appointment_id,
+                "event_id": event_id,
+            },
         )
 
     @staticmethod
     def get_by_client_id(client_id: UUID4) -> list:
         """ Получеение данных о записи клиента """
-        return _MongoCRUD.get_document(
+
+        return _MongoCRUD.get_documents(
             AppointmentCRUD.__collection,
-            {'client_id': client_id}
+            {'client_id': client_id},
         )
 
     @staticmethod
     def get_by_event_id(event_id: UUID4) -> list:
         """ Получеение данных о записи клиента """
 
-        data = _MongoCRUD.get_document(
+        data = _MongoCRUD.get_documents(
             AppointmentCRUD.__collection,
             {'event_id': event_id},
-            multiple=True
         )
-
         return [Appointment(**item) for item in data]
 
 

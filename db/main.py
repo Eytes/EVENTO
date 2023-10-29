@@ -22,15 +22,22 @@ app = FastAPI()
 @app.get("/events/{event_id}/appointments/")
 async def get_event_appointments(event_id: UUID4) -> list:
     """ Получение всех записей на событие """
-    return AppointmentCRUD.get_by_event_id(event_id)
+    pass
 
 
-@app.post("/events/{event_id}/appointments/")
-def post_event_appointment(appointment: Appointment) -> str:
+@app.post("/events/appointments/")
+def create_appointment(appointment: Appointment) -> str:
     """ Создание возможной записи на событие """
     return AppointmentCRUD.create(appointment)
 
 
-@app.delete("/appointments/{appointment_id}")
-def delete_appointment(appointment_id: UUID4):
+@app.delete("/events/appointments/")
+def delete_appointment(event_id: UUID4, appointment_id: UUID4):
+    """ Удалить запись на событие """
+    AppointmentCRUD.delete(event_id, appointment_id)
+
+
+@app.put("/events/{event_id}/appointments/{appointment_id}")
+def change_appointment(event_id: UUID4, appointment_id: UUID4):
+    """ Изменение параметров записи на событие """
     pass
