@@ -1,24 +1,34 @@
+import uuid
+from datetime import datetime
+
 from pydantic import (
     BaseModel,
     Field,
-    UUID4
+    UUID4,
 )
 
 
-class __ID(BaseModel):
-    id: UUID4 = Field(alias='_id')
+class _ID(BaseModel):
+    id: UUID4 = Field(alias='_id', default=uuid.uuid4())
 
 
-class __Time(BaseModel):
-    time: str
+class _Time(BaseModel):
+    # TODO: продумать другие варианты хранения времени
+    hour: int = Field(default=0, ge=0, le=23)
+    min: int = Field(default=0, ge=0, le=59)
 
 
-class __Date(BaseModel):
-    date: str
+class _Date(BaseModel):
+    # TODO: продумать другие варианты хранения даты
+    year: int = Field(default=datetime.today().year, ge=datetime.today().year)
+    month: int = Field(default=datetime.today().month, ge=datetime.today().month)
+    day: int = Field(ge=1, le=31)
 
 
-class Appointment(__ID, __Date, __Time):
+class Appointment(_ID):
     event_id: UUID4
+    date: _Date
+    time: _Time
     # price: float
 
 
@@ -26,20 +36,21 @@ class ClientAppointment(Appointment):
     client_id: UUID4
 
 
-class Event(__ID, __Date):
+class Event(_ID):
     title: str
     # description: str
     agent_id: UUID4
+    date: _Date
     # type: str
     # status: str
 
 
-class Client(__ID):
+class Client(_ID):
     name: str
     # second_name: str
     # phone_number: str
 
 
-class Agent(__ID):
+class Agent(_ID):
     title: str
     # rate: float
