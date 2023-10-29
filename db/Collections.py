@@ -1,10 +1,11 @@
-from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorCollection
+from pymongo import MongoClient
+from pymongo.collection import Collection
 
-
-__client = AsyncIOMotorClient('localhost', 27017)
+# uuidRepresentation='standard' (для поддержания кроссплатформенности)
+__client = MongoClient('localhost', 27017, uuidRepresentation='standard')
 __db = __client['EVENTO']
 
-agents: AsyncIOMotorCollection = __db['agents']
-events: AsyncIOMotorCollection = __db['events']
-appointments: AsyncIOMotorCollection = __db['appointments']
-clients: AsyncIOMotorCollection = __db['clients']
+agents: Collection = __db['agents']
+events: Collection = __db['events']
+appointments: Collection = __db['appointments']
+clients: Collection = __db['clients']
