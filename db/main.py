@@ -37,7 +37,13 @@ def delete_appointment(event_id: UUID4, appointment_id: UUID4):
     AppointmentCRUD.delete(event_id, appointment_id)
 
 
-@app.put("/events/{event_id}/appointments/{appointment_id}")
+@app.put("/events/appointments/")
 def change_appointment(event_id: UUID4, appointment_id: UUID4):
     """ Изменение параметров записи на событие """
+    pass
+
+
+@app.post('/events/')
+def create_event():
+    """ Создание события """
     pass
