@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from pydantic import UUID4
 
 from crud import (
     AgentCRUD,
@@ -12,17 +13,24 @@ from models import (
     Agent,
     Client,
     Appointment,
+    ClientAppointment,
 )
 
 app = FastAPI()
 
 
-@app.get("/db/appointments/{event_title}")
-async def appointments(event_title: str):
-    return
+@app.get("/events/{event_id}/appointments/")
+async def get_event_appointments(event_id: UUID4) -> list:
+    """ Получение всех записей на событие """
+    return AppointmentCRUD.get_by_event_id(event_id)
 
 
-@app.post("/db/appointments/")
-async def create_appointments(appointment: Appointment):
+@app.post("/events/{event_id}/appointments/")
+def post_event_appointment(appointment: Appointment) -> str:
+    """ Создание возможной записи на событие """
     return AppointmentCRUD.create(appointment)
 
+
+@app.delete("/appointments/{appointment_id}")
+def delete_appointment(appointment_id: UUID4):
+    pass
