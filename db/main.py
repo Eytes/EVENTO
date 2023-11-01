@@ -1,49 +1,28 @@
 from fastapi import FastAPI
-from pydantic import UUID4
 
-from crud import (
-    AgentCRUD,
-    ClientCRUD,
-    AppointmentCRUD,
-    EventCRUD,
+from routers import (
+    appointment,
+    agent,
+    client,
+    event,
 )
-
-from models import (
-    Event,
-    Agent,
-    Client,
-    Appointment,
-    ClientAppointment,
-)
-
-app = FastAPI()
+import uvicorn
+import os
 
 
-@app.get("/events/{event_id}/appointments/")
-async def get_event_appointments(event_id: UUID4) -> list:
-    """ Получение всех записей на событие """
-    pass
+def create_app():
+    app = FastAPI()
+
+    app.include_router(appointment.router)
+    app.include_router(agent.router)
+    app.include_router(client.router)
+    app.include_router(event.router)
+
+    return app
 
 
-@app.post("/events/appointments/")
-def create_appointment(appointment: Appointment) -> str:
-    """ Создание возможной записи на событие """
-    return AppointmentCRUD.create(appointment)
+app = create_app()
 
 
-@app.delete("/events/appointments/")
-def delete_appointment(event_id: UUID4, appointment_id: UUID4):
-    """ Удалить запись на событие """
-    AppointmentCRUD.delete(event_id, appointment_id)
-
-
-@app.put("/events/appointments/")
-def change_appointment(event_id: UUID4, appointment_id: UUID4):
-    """ Изменение параметров записи на событие """
-    pass
-
-
-@app.post('/events/')
-def create_event():
-    """ Создание события """
-    pass
+if __name__ == '__main__':
+    uvicorn.run("main:app", host="0.0.0.0", port=int(os.getenv("PORT")), reload=True)
