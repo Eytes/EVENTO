@@ -27,13 +27,10 @@ class _Date(BaseModel):
 
 class Appointment(_ID):
     event_id: UUID4
+    client_id: UUID4 | None = None
     date: _Date
     time: _Time
     # price: float
-
-
-class ClientAppointment(Appointment):
-    client_id: UUID4
 
 
 class Event(_ID):
@@ -41,16 +38,19 @@ class Event(_ID):
     # description: str
     agent_id: UUID4
     date: _Date
+    appointments: list[Appointment] = []
     # type: str
     # status: str
 
 
 class Client(_ID):
     name: str
+    appointments: list[Appointment] = []
     # second_name: str
     # phone_number: str
 
 
 class Agent(_ID):
     title: str
+    events: list[Event] = []
     # rate: float
