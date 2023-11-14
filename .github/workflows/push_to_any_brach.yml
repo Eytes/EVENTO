@@ -10,35 +10,6 @@ jobs:
       - name: Exctract branch name
         run: echo "Branch name is ${GITHUB_REF#refs/heads/}"
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-
-      - name: Show python version
-        run: python3 --version
-
-      - name: Install pipx
-        run: |
-          python3 -m pip install --user pipx
-          python3 -m pipx ensurepath
-
-      - name: Show pipx version
-        run: pipx --version
-
-      - name: Install Poetry
-        run: pipx install poetry
-
-      - name: Show poetry version
-        run: poetry --version
-
-      - name: Get repository code
-        uses: actions/checkout@v4
-
-      - name: Install dependecies with pytest
-        run: poetry install --with test
-
-      - name: Test application with pytest
-        run: poetry run pytest
-
-# TODO: добавить сборку проекта в контейнер и тестирование контейнера
+# TODO: установить docker и docker-compose
+# TODO: сборка контейнеров для каждого сервиса
+# TODO: прогон тестов для каждого сервиса
