@@ -11,6 +11,9 @@ fastapi = {extras = ["all"], version = "^0.104.0"}
 pymongo = "^4.5.0"
 
 
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.3"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

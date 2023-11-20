@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 from pymongo.collection import Collection
 
+
 # uuidRepresentation='standard' (для поддержания кроссплатформенности)
 __client = MongoClient('localhost', 27017, uuidRepresentation='standard')
 __db = __client['EVENTO']
