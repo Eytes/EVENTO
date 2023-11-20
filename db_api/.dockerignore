@@ -416,6 +416,3 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm,visualstudiocode,react,venv,linux,windows,macos,ssh,gpg
-
-# Myself
-data/

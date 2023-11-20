@@ -11,11 +11,22 @@ from pydantic import (
 #     ACTIVE = "ACTIVE"
 #     IN_ARCHIVE = "IN_ARCHIVE"
 
+class EventTitle(BaseModel):
+    title: str
 
-class Event(BaseModel):
-    id: int = Field(alias='_id')
+
+class EventId(BaseModel):
+    id_: int = Field(alias='_id')
+
+
+class EventBase(BaseModel):
     title: str
     # description: str
     agent_id: int
+    # date: str
     # type: str
-    # lock: bool
+    # status: Status
+
+
+class Event(EventId, EventBase):
+    pass

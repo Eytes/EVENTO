@@ -2,15 +2,20 @@ from typing import List
 
 from pydantic import (
     BaseModel,
-    Field,
 )
 
-from models import Event
+from appointment.dto.Event import (
+    Event,
+    EventBase,
+)
 
 
 class AgentEvents(BaseModel):
-    # agent_id: int
     event_list: List[Event]
+
+
+class ClientAppointments(BaseModel):
+    appointments: List[EventBase]
 
 
 class Message(BaseModel):
