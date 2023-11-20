@@ -1,14 +1,19 @@
-name: Push to any branch
-on:
-  push:
-    branches-ignore:
-      - dev
+name: CI
+run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
+on: push
 jobs:
-  run_tests:
+  testing:
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11']
     runs-on: ubuntu-latest
     steps:
-      - name: Exctract branch name
-        run: echo "Branch name is ${GITHUB_REF#refs/heads/}"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python my_script.py
+
 
 # TODO: установить docker и docker-compose
 # TODO: сборка контейнеров для каждого сервиса
